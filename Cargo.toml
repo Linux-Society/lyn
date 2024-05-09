@@ -1,0 +1,32 @@
+[package]
+name = "lyn"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tracing = { version = "0.1", features = ["max_level_trace", "release_max_level_debug"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-journald = "0.3.0"
+tracing-appender = "0.2"
+lazy_static = "1.4.0"
+home = "0.5.9"
+shellexpand = "3.1.0"
+anyhow = "1.0"
+mlua = { version = "0.9.7", features = ["lua54", "macros"] }
+
+[dependencies.smithay]
+git = "https://github.com/smithay/smithay.git"
+features = [
+    "wayland_frontend",
+    "winit",
+    "backend_winit",
+    "backend_egl",
+    "desktop",
+    "renderer_glow",
+    "renderer_gl",
+    "renderer_multi",
+    "xwayland",
+    "use_system_lib"
+]
