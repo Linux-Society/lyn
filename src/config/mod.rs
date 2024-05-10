@@ -5,7 +5,8 @@ use std::{
 
 use home::home_dir;
 use lazy_static::lazy_static;
-use mlua::Lua;
+use mlua::{Lua, LuaSerdeExt};
+use tracing::info;
 
 use crate::config::config_types::Config;
 
@@ -29,7 +30,7 @@ lazy_static! {
 
         let globals = lua.globals();
 
-        globals.set("config", config).unwrap();
+        globals.set("config", lua.to_value(&config).unwrap()).unwrap();
 
         // Read config content into a string to be parsed/exec by lua
         let config_content = read_to_string(home).unwrap();
@@ -37,8 +38,11 @@ lazy_static! {
         // Execute the lua config file (should set/write config values.)
         lua.load(config_content).exec().unwrap();
 
-        // Unwrap on config fail
-        globals.get("config").unwrap()
+        // Convert from lua value (gotten from globals under "config") to our Config
+        lua.from_value::<Config>(
+            globals.get::<_, mlua::Value>("config")
+            .unwrap()
+        ).unwrap()
     };
 }
 
