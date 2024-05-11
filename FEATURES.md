@@ -7,3 +7,4 @@ Insert any ideas or features you would like to see implemented in the Linux Soci
 - Customisable keybinds
   - User macros for things like running shell commands
   - Optional includable keybind presets (i.e. hyprland-like, windows-like, etc)
+- Tiling window management
